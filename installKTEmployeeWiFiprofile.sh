@@ -20,7 +20,8 @@ installProfile() # Actually does the real work.
     exit 1
   fi
 }
-removeKTEmployeePassword() # Removes the saved password for KTEmployee WiFi in the user's keychain. Inspired/Lifted from Enterprise Connect sample password script.
+
+removeKTEmployeePassword() # Removes the saved password for KTEmployee WiFi in the user's keychain. 
 {
   if [[ "$inKeychain" != "" ]]; then
     echo "Found KTEmployee password in $inKeychain"
