@@ -1,7 +1,7 @@
 #!/bin/bash
 # installKTEmployeeWiFiprofile.sh
 # Installs the KTEmployee Certificate Authentication WiFi profile for the current user
-# version 1.0 2016-06-15
+# version 1.0 2016-06-19
 
 ##Variables
 User=$(python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')
