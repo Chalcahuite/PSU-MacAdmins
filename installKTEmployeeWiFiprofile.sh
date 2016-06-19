@@ -1,7 +1,6 @@
 #!/bin/bash
 # installKTEmployeeWiFiprofile.sh
 # Installs the KTEmployee Certificate Authentication WiFi profile for the current user
-# © 2016 by Sergio Aviles.
 # version 1.0 2016-06-15
 
 ##Variables
