@@ -130,7 +130,7 @@ cleanup() # remove all mobileconfig files. Leave no traces!
       /bin/rm "$wd"/"$t"
     done
   fi
-  echo "Remove Signing Cert(s)"
+  echo "Remove Signing Cert(s)" # <- with impunity
   /usr/bin/profiles -R -F "$certPath"
 }
 
