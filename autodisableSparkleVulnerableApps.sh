@@ -117,19 +117,21 @@ verifySigningCert() #verify that signing cert is present.
   fi
 }
 
-cleanup() # remove all mobileconfig files. 
+cleanup() # remove all mobileconfig files. Leave no traces!
 {
   wd=$(pwd) # <- seriously, where am I again?
   toRemove=$(ls "$wd" | awk '/disable/')
-  if [[ -z "$toRemove" ]]; then
+  if [[ -z "$toRemove" ]]; then # <- shouldn't be empty, but if it is you're done.
     echo "No profiles to clean up."
   else
     echo "Cleaning up profiles"
-    for t in $toRemove; do
+    for t in $toRemove; do # <- iterate through list of created mobile config files and delete with prejudice.
       echo "Deleting $t"
       /bin/rm "$wd"/"$t"
     done
   fi
+  echo "Remove Signing Cert(s)"
+  /usr/bin/profiles -R -F "$certPath"
 }
 
 ##Execute
