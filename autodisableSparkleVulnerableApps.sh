@@ -14,7 +14,6 @@ cert="Extinguish Cert Signing Test.mobileconfig" # <- Intermediate cert necessar
 certPath=/private/tmp/"$cert"
 ProfileSigner=$scriptPath/ProfileSigner.py
 SigningCert="3rd Party Mac Developer Application: Jane Doe (ABDCD12E34)" # <- Your signing cert goes here.
-
 certURL="https://webserver.kabletown.com/Downloads/DisableSparkleVulnerableApps.mobileconfig" # <- URL where profile is hosted.
 
 ##Functions
@@ -27,12 +26,12 @@ getAppList() #Generate vulnerable app list using Ben Toms' Sparkle-MITM-Vuln-App
 {
   if [[ -e "$sparkleCheck" ]]; then # <- If script is present generate a list.
     echo "Generating vulnerable app list."
-    appList=$("$sparkleCheck" | awk -F- '{print $2}')
+    appList=$("$sparkleCheck" | awk -F- '{print $2}' | sed -e 's/<[^>]*>//g') # <- get App IDs.
   else # <- if not, get it then generate a list.
     echo "Sparkle Check script missing. Downloading."
     $jamf policy -event installSparkleScripts
     echo "Generating vulnerable app list."
-    appList=$(${sparkleCheck} | awk -F- '{print $2}')
+    appList=$(${sparkleCheck} | awk -F- '{print $2}' | sed -e 's/<[^>]*>//g') # <- get App IDs.
   fi
 }
 
@@ -125,13 +124,14 @@ cleanup() # remove all mobileconfig files. Leave no traces!
     echo "No profiles to clean up."
   else
     echo "Cleaning up profiles"
-    for t in $toRemove; do # <- iterate through list of created mobile config files and delete with prejudice.
+    for t in $toRemove; do # <- iterate through list of created mobile config files and delete for great justice.
       echo "Deleting $t"
       /bin/rm "$wd"/"$t"
     done
   fi
-  echo "Remove Signing Cert(s)" # <- with impunity
+  echo "Removing signing certs."
   /usr/bin/profiles -R -F "$certPath"
+  /bin/rm "$certPath"
 }
 
 ##Execute
